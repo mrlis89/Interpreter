@@ -16,8 +16,8 @@ public class LexParser implements ILexParser {
     public Collection<Lexeme> parse() {
         ArrayList<Lexeme> lexemes = new ArrayList<>();
         Collection<String> splitLines = splitter.split(line);
-        for (String s: splitLines) {
-            lexemes.add(converter.fromString(s));
+        for (String st: splitLines) {
+            lexemes.add(converter.fromString(st));
         }
 
         return lexemes;
