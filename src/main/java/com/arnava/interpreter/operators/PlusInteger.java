@@ -2,10 +2,11 @@ package com.arnava.interpreter.operators;
 
 import com.arnava.interpreter.types.IInteger;
 import com.arnava.interpreter.scalars.ScalarInteger;
+import com.arnava.interpreter.types.IScalarType;
 
 public class PlusInteger extends BinaryOperator implements IInteger {
 
-    public PlusInteger(IInteger arg1, IInteger arg2) {
+    public PlusInteger(IScalarType arg1, IScalarType arg2) {
         super(arg1, arg2);
     }
 
