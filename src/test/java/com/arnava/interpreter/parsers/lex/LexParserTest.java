@@ -2,7 +2,7 @@ package com.arnava.interpreter.parsers.lex;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,72 +12,45 @@ class LexParserTest {
     @Test
     void parseForOneNumber() {
         assertThat(
-                getActual("2")
+            actual("2")
         ).usingRecursiveComparison().isEqualTo(
-                getExpected(
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "2"
-                        )
+            expected(
+                new Lexeme(
+                    LexTypes.NUMBER,
+                    "2"
                 )
+            )
         );
     }
 
     @Test
-    void parseForShortExpressionWithSpaces() {
+    void parse() {
         assertThat(
-                getActual(" 2 - 3 ")
+            actual("2 + 3")
         ).usingRecursiveComparison().isEqualTo(
-                getExpected(
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "2"
-                        ),
-                        new Lexeme(LexTypes.MINUS),
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "3"
-                        )
+            expected(
+                new Lexeme(
+                    LexTypes.NUMBER,
+                    "2"
+                ),
+                new Lexeme(LexTypes.PLUS),
+                new Lexeme(
+                    LexTypes.NUMBER,
+                    "3"
                 )
+            )
         );
     }
 
-    @Test
-    void parseForLongExpressionWithSpaces() {
-        assertThat(
-                getActual(" 2 - 3+5 - 7")
-        ).usingRecursiveComparison().isEqualTo(
-                getExpected(
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "2"
-                        ),
-                        new Lexeme(LexTypes.MINUS),
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "3"
-                        ),
-                        new Lexeme(LexTypes.PLUS),
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "5"
-                        ),
-                        new Lexeme(
-                                LexTypes.MINUS
-                        ),
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "7"
-                        )
-                )
-        );
-    }
-
-    private Collection<Lexeme> getActual(String value) {
+    private Collection<Lexeme> actual(String value) {
         return new LexParser(value).parse();
     }
 
-    private Collection<Lexeme> getExpected(Lexeme... values) {
-        return Arrays.asList(values);
+    private Collection<Lexeme> expected(Lexeme... values) {
+        ArrayList<Lexeme> res = new ArrayList<>();
+        for(Lexeme v: values) {
+            res.add(v);
+        }
+        return res;
     }
 }

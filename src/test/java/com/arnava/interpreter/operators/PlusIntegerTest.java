@@ -2,41 +2,40 @@ package com.arnava.interpreter.operators;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PlusIntegerTest {
     @Test
     void getArg1() {
-        assertThat(
-            new PlusInteger(1,2)
-                    .getArg1()
-                    .toScalar()
-        ).isEqualTo(1);
+        assertEquals(
+            1,
+            new PlusInteger(1,2).getArg1().toScalar()
+        );
     }
     @Test
     void getArg2() {
-        assertThat(
-            new PlusInteger(3,2)
-                    .getArg2()
-                    .toScalar()
-        ).isEqualTo(2);
+        assertEquals(
+            2,
+            new PlusInteger(3,2).getArg2().toScalar()
+        );
     }
 
     @Test
     void toScalar() {
-        assertThat(
-            new PlusInteger(3,2)
-                    .toScalar()
-        ).isEqualTo(5);
+        assertEquals(
+            5,
+            new PlusInteger(3,2).toScalar()
+        );
     }
 
     @Test
     void toScalarWithGrouping() {
-        assertThat(
+        assertEquals(
+            4,
             new PlusInteger(
                 new PlusInteger(1,1),
                 new PlusInteger(1,1)
             ).toScalar()
-        ).isEqualTo(4);
+        );
     }
 }

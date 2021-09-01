@@ -1,23 +1,13 @@
 package com.arnava.interpreter.parsers.syntax;
 
-import com.arnava.interpreter.parsers.lex.LexTypes;
 import com.arnava.interpreter.parsers.lex.Lexeme;
-import com.arnava.interpreter.types.IScalarType;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Objects;
 
-public class SyntaxNode implements ISyntaxNode {
+public class SyntaxNode {
     private Lexeme value;
-    private List<SyntaxNode> args;
-
-    public SyntaxNode(Lexeme value, List<SyntaxNode> args) {
-        this.value = value;
-        this.args = args;
-    }
-
-    public SyntaxNode(Lexeme value) {
-        this.value = value;
-    }
+    private Collection<SyntaxNode> args;
 
     @Override
     public boolean equals(Object o) {
@@ -30,10 +20,5 @@ public class SyntaxNode implements ISyntaxNode {
     @Override
     public int hashCode() {
         return Objects.hash(value, args);
-    }
-
-    @Override
-    public IScalarType fromNode() {
-        return value.getType().createNew(value, args);
     }
 }
