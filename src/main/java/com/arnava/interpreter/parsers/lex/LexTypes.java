@@ -1,5 +1,6 @@
 package com.arnava.interpreter.parsers.lex;
 
+import com.arnava.interpreter.operators.MinusInteger;
 import com.arnava.interpreter.operators.PlusInteger;
 import com.arnava.interpreter.parsers.syntax.SyntaxNode;
 import com.arnava.interpreter.scalars.ScalarInteger;
@@ -31,7 +32,12 @@ public enum LexTypes {
             return new PlusInteger(args.get(0).fromNode(), args.get(1).fromNode());
         }
     },
-    MINUS,
+    MINUS {
+        @Override
+        public MinusInteger createNew(Lexeme value, List<SyntaxNode> args) {
+            return new MinusInteger(args.get(0).fromNode(), args.get(1).fromNode());
+        }
+    },
     DIV,
     MULT,
     ASSIGN,

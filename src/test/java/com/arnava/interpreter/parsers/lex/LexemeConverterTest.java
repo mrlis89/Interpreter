@@ -6,13 +6,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LexemeConverterTest {
 
     @Test
-    void fromStringForPlusOperator() {
+    void fromStringForOperator() {
+        assertThat(
+                new LexemeConverter()
+                        .fromString("-")
+        ).isEqualTo(
+                new Lexeme(LexTypes.MINUS)
+        );
+
         assertThat(
                 new LexemeConverter()
                         .fromString("+")
         ).isEqualTo(
                 new Lexeme(LexTypes.PLUS)
         );
+
     }
 
     @Test

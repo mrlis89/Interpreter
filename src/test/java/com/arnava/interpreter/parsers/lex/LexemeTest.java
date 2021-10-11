@@ -1,7 +1,7 @@
 package com.arnava.interpreter.parsers.lex;
 
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 class LexemeTest {
 
@@ -19,5 +19,23 @@ class LexemeTest {
                 new Lexeme(LexTypes.NUMBER,"12")
                         .getValue()
         ).isEqualTo("12");
+    }
+
+    @Test
+    void testEquals() {
+        assertThat(
+                new Lexeme(LexTypes.NUMBER,"12")
+                        .equals(
+                                new Lexeme(LexTypes.NUMBER,"12"))
+
+        ).isTrue();
+
+        assertThat(
+                new Lexeme(LexTypes.NUMBER,"12")
+                        .equals(null)
+
+        ).isFalse();
+
+
     }
 }
