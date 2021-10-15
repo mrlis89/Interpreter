@@ -9,30 +9,21 @@ import java.util.List;
 
 public class SyntaxParser {
 
+    private BranchSplitter branchSplitter = new BranchSplitter();
+
     public SyntaxNode toNodeTree(List<Lexeme> lexemes) {
+        List<List<Lexeme>> branches = new ArrayList<List<Lexeme>>(2);
         ArrayList<Lexeme> leftBranch = new ArrayList<>();
         ArrayList<Lexeme> rightBranch = new ArrayList<>();
-        ArrayList<Lexeme> buffer = new ArrayList<>();
-        Lexeme parent = new Lexeme(LexTypes.FALSE);
+        Lexeme parent;
 
         if (lexemes.size() == 1) {
             return new SyntaxNode(lexemes.get(0));
         } else {
-            for (int i = 0; i < lexemes.size(); i++) {
-                Lexeme lex = lexemes.get(i);
-                if (lex.isLowPriorOper()) {
-                    parent = lex;
-                    leftBranch.addAll(buffer);
-                    buffer.clear();
-                    for (int j = i + 1; j < lexemes.size(); j++) {
-                        buffer.add(lexemes.get(j));
-                    }
-                    rightBranch.addAll(buffer);
-                    buffer.clear();
-                    break;
-                }
-                buffer.add(lex);
-            }
+            branches.addAll(branchSplitter.split(lexemes));
+            leftBranch.addAll(branches.get(0));
+            rightBranch.addAll(branches.get(1));
+            parent = branchSplitter.getParent();
         }
 
         if (leftBranch.size() == 1 && rightBranch.size() == 1) {
