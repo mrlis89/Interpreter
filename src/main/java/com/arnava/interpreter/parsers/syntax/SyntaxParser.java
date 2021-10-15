@@ -1,5 +1,6 @@
 package com.arnava.interpreter.parsers.syntax;
 
+import com.arnava.interpreter.parsers.lex.LexTypes;
 import com.arnava.interpreter.parsers.lex.Lexeme;
 
 import java.util.ArrayList;
@@ -7,16 +8,33 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SyntaxParser {
-    private ArrayList<Lexeme> leftBranch = new ArrayList<Lexeme>();
-    private ArrayList<Lexeme> rightBranch = new ArrayList<Lexeme>();
-    private ArrayList<Lexeme> buffer = new ArrayList<Lexeme>();
-    private Lexeme parent;
-
 
     public SyntaxNode toNodeTree(List<Lexeme> lexemes) {
-        leftBranch.clear();
-        rightBranch.clear();
-        parseLine(lexemes);
+        ArrayList<Lexeme> leftBranch = new ArrayList<>();
+        ArrayList<Lexeme> rightBranch = new ArrayList<>();
+        ArrayList<Lexeme> buffer = new ArrayList<>();
+        Lexeme parent = new Lexeme(LexTypes.FALSE);
+
+        if (lexemes.size() == 1) {
+            return new SyntaxNode(lexemes.get(0));
+        } else {
+            for (int i = 0; i < lexemes.size(); i++) {
+                Lexeme lex = lexemes.get(i);
+                if (lex.isLowPriorOper()) {
+                    parent = lex;
+                    leftBranch.addAll(buffer);
+                    buffer.clear();
+                    for (int j = i + 1; j < lexemes.size(); j++) {
+                        buffer.add(lexemes.get(j));
+                    }
+                    rightBranch.addAll(buffer);
+                    buffer.clear();
+                    break;
+                }
+                buffer.add(lex);
+            }
+        }
+
         if (leftBranch.size() == 1 && rightBranch.size() == 1) {
             return new SyntaxNode(parent,
                     Arrays
@@ -45,29 +63,6 @@ public class SyntaxParser {
                                     this.toNodeTree(new ArrayList<>(rightBranch))
                             )
             );
-        }
-    }
-
-    public void parseLine(List<Lexeme> lexemes) {
-        if (lexemes.size() == 1) {
-            parent = lexemes.get(0);
-        } else {
-            for (int i = 0; i < lexemes.size(); i++) {
-                Lexeme lex = lexemes.get(i);
-                String lexType = lex.getType().name();
-                if (lexType.equals("PLUS") | lexType.equals("MINUS")) {
-                    this.parent = lex;
-                    this.leftBranch.addAll(buffer);
-                    buffer.clear();
-                    for (int j = i + 1; j < lexemes.size(); j++) {
-                        buffer.add(lexemes.get(j));
-                    }
-                    this.rightBranch.addAll(buffer);
-                    buffer.clear();
-                    break;
-                }
-                buffer.add(lex);
-            }
         }
     }
 }

@@ -22,4 +22,12 @@ public class Lexeme {
         return value;
     }
 
+    public boolean isLowPriorOper () {
+        return (type.name().equals("PLUS") | type.name().equals("MINUS"));
+    }
+
+    public boolean isHighPriorOper () {
+        return (type.name().equals("MULT") | type.name().equals("DIV"));
+    }
+
 }

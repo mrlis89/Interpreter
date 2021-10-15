@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class SyntaxParserTest {
+
     @Test
-    void parse(){
+    void parseForExpression(){
         LexParser lp = new LexParser("3 +5-3 + 1");
         assertThat(
                 new SyntaxParser()
@@ -15,5 +16,16 @@ class SyntaxParserTest {
                         .fromNode()
                         .toScalar())
                 .isEqualTo(4);
+    }
+
+    @Test
+    void parseForOneNumber(){
+        LexParser lp = new LexParser("7");
+        assertThat(
+                new SyntaxParser()
+                        .toNodeTree(lp.parse())
+                        .fromNode()
+                        .toScalar())
+                .isEqualTo(7);
     }
 }
