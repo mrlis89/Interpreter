@@ -1,5 +1,7 @@
 package com.arnava.interpreter.parsers.lex;
 
+import java.util.Objects;
+
 public class Lexeme {
     private final LexTypes type;
     private final String value;
@@ -30,4 +32,24 @@ public class Lexeme {
         return (type.name().equals("MULT") | type.name().equals("DIV"));
     }
 
+    public boolean isLeftBracket () {
+        return (type.name().equals("LEFT_PARENTHESIS"));
+    }
+
+    public boolean isRightBracket () {
+        return (type.name().equals("RIGHT_PARENTHESIS"));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Lexeme lexeme = (Lexeme) o;
+        return type == lexeme.type && Objects.equals(value, lexeme.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, value);
+    }
 }

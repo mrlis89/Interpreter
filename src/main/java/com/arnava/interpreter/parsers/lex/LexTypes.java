@@ -1,6 +1,8 @@
 package com.arnava.interpreter.parsers.lex;
 
+import com.arnava.interpreter.operators.DivInteger;
 import com.arnava.interpreter.operators.MinusInteger;
+import com.arnava.interpreter.operators.MultInteger;
 import com.arnava.interpreter.operators.PlusInteger;
 import com.arnava.interpreter.parsers.syntax.SyntaxNode;
 import com.arnava.interpreter.scalars.ScalarInteger;
@@ -38,8 +40,18 @@ public enum LexTypes {
             return new MinusInteger(args.get(0).fromNode(), args.get(1).fromNode());
         }
     },
-    DIV,
-    MULT,
+    DIV{
+        @Override
+        public DivInteger createNew(Lexeme value, List<SyntaxNode> args) {
+            return new DivInteger(args.get(0).fromNode(), args.get(1).fromNode());
+        }
+    },
+    MULT {
+        @Override
+        public MultInteger createNew(Lexeme value, List<SyntaxNode> args) {
+            return new MultInteger(args.get(0).fromNode(), args.get(1).fromNode());
+        }
+    },
     ASSIGN,
 
     //Separators
@@ -52,6 +64,7 @@ public enum LexTypes {
     ;
 
     public IScalarType createNew(Lexeme value, List<SyntaxNode> args) {
+        System.out.println("operator not overridden");
         return null;
     }
 }

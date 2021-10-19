@@ -1,6 +1,5 @@
 package com.arnava.interpreter.parsers.syntax;
 
-import com.arnava.interpreter.parsers.lex.LexTypes;
 import com.arnava.interpreter.parsers.lex.Lexeme;
 
 import java.util.ArrayList;
@@ -20,10 +19,10 @@ public class SyntaxParser {
         if (lexemes.size() == 1) {
             return new SyntaxNode(lexemes.get(0));
         } else {
-            branches.addAll(branchSplitter.split(lexemes));
+            branches.addAll(branchSplitter.toBranches(lexemes));
+            parent = branchSplitter.getParent();
             leftBranch.addAll(branches.get(0));
             rightBranch.addAll(branches.get(1));
-            parent = branchSplitter.getParent();
         }
 
         if (leftBranch.size() == 1 && rightBranch.size() == 1) {

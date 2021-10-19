@@ -13,14 +13,6 @@ class LexemeConverterTest {
         ).isEqualTo(
                 new Lexeme(LexTypes.MINUS)
         );
-
-        assertThat(
-                new LexemeConverter()
-                        .fromString("+")
-        ).isEqualTo(
-                new Lexeme(LexTypes.PLUS)
-        );
-
     }
 
     @Test

@@ -18,6 +18,22 @@ public class LexemeConverter implements ILexConverter {
                     ret = new Lexeme(LexTypes.MINUS);
                     break;
                 }
+                case "(": {
+                    ret = new Lexeme(LexTypes.LEFT_PARENTHESIS);
+                    break;
+                }
+                case ")": {
+                    ret = new Lexeme(LexTypes.RIGHT_PARENTHESIS);
+                    break;
+                }
+                case "*": {
+                    ret = new Lexeme(LexTypes.MULT);
+                    break;
+                }
+                case "/": {
+                    ret = new Lexeme(LexTypes.DIV);
+                    break;
+                }
             }
         }
         return ret;
