@@ -27,7 +27,7 @@ public class BranchSplitter implements IBranchSplitter {
 //looking for low priority operator
         for (int i = 0; i < lexemes.size(); i++) {
             Lexeme lex = lexemes.get(i);
-            if (lex.isLowPriorOper() && (i < parenthesesIndexes[0] | i > parenthesesIndexes[1])) {
+            if (lex.isLowPriorOper() && (i < parenthesesIndexes[0] || i > parenthesesIndexes[1])) {
                 parent = lex;
                 leftBranch.addAll(buffer);
                 buffer.clear();
@@ -44,7 +44,7 @@ public class BranchSplitter implements IBranchSplitter {
         buffer.clear();
         for (int i = 0; i < lexemes.size(); i++) {
             Lexeme lex = lexemes.get(i);
-            if (lex.isHighPriorOper() && (i < parenthesesIndexes[0] | i > parenthesesIndexes[1])) {
+            if (lex.isHighPriorOper() && (i < parenthesesIndexes[0] || i > parenthesesIndexes[1])) {
                 parent = lex;
                 leftBranch.addAll(buffer);
                 buffer.clear();

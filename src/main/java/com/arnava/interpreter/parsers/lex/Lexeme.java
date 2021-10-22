@@ -25,19 +25,19 @@ public class Lexeme {
     }
 
     public boolean isLowPriorOper () {
-        return (type.name().equals("PLUS") | type.name().equals("MINUS"));
+        return (type.equals(LexTypes.PLUS) | type.equals(LexTypes.MINUS));
     }
 
     public boolean isHighPriorOper () {
-        return (type.name().equals("MULT") | type.name().equals("DIV"));
+        return (type.equals(LexTypes.MULT) | type.equals(LexTypes.DIV));
     }
 
     public boolean isLeftBracket () {
-        return (type.name().equals("LEFT_PARENTHESIS"));
+        return type.equals(LexTypes.LEFT_PARENTHESIS);
     }
 
     public boolean isRightBracket () {
-        return (type.name().equals("RIGHT_PARENTHESIS"));
+        return type.equals(LexTypes.RIGHT_PARENTHESIS);
     }
 
     @Override
