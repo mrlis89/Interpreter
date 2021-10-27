@@ -19,7 +19,8 @@ jobs:
       with:
           java-version: 11
           distribution: 'adopt'
-                  
+          cache: 'gradle'
+          
     - name: Cache Gradle packages
       uses: gradle/gradle-build-action@v2.0-beta.7
   
