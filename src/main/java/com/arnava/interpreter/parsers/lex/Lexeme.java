@@ -25,11 +25,11 @@ public class Lexeme {
     }
 
     public boolean isLowPriorOper () {
-        return (type.equals(LexTypes.PLUS) | type.equals(LexTypes.MINUS));
+        return (type.equals(LexTypes.PLUS) || type.equals(LexTypes.MINUS));
     }
 
     public boolean isHighPriorOper () {
-        return (type.equals(LexTypes.MULT) | type.equals(LexTypes.DIV));
+        return (type.equals(LexTypes.MULT) || type.equals(LexTypes.DIV));
     }
 
     public boolean isLeftBracket () {
