@@ -8,3 +8,4 @@ the following operators are supported: + , - , * , /
 ![commits](https://img.shields.io/github/commit-activity/m/mrlis89/Interpreter)
 ![issues](https://img.shields.io/github/issues/mrlis89/Interpreter)
 ![language](https://img.shields.io/github/languages/top/mrlis89/Interpreter)
+[![Mutation tested with PIT](https://img.shields.io/badge/-Mutation%20tested%20with%20PIT-blue.svg)](http://pitest.org/)
