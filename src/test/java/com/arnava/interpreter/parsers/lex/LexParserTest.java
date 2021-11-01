@@ -73,6 +73,16 @@ class LexParserTest {
         );
     }
 
+    @Test
+    void containsParentheses() {
+        LexParser lp = new LexParser("7 * (3 + 1) + 2");
+        assertThat(
+                lp
+                        .parse()
+                        .contains(new Lexeme(LexTypes.LEFT_PARENTHESIS))
+        ).isTrue();
+    }
+
     private Collection<Lexeme> getActual(String value) {
         return new LexParser(value).parse();
     }

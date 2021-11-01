@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LexemeSplitter implements ILexemeSplitter {
-    Pattern pattern = Pattern.compile("[\\d+\\s\\*\\+\\-\\/\\=]");
-    Matcher match;
+    private Pattern pattern = Pattern.compile("[\\d+\\s\\*\\+\\-\\/\\=\\(\\)]");
+    private Matcher match;
 
     @Override
     public Collection<String> split(String st) {

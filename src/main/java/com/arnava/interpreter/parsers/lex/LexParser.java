@@ -2,6 +2,7 @@ package com.arnava.interpreter.parsers.lex;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class LexParser implements ILexParser {
     private final String line;
@@ -13,7 +14,7 @@ public class LexParser implements ILexParser {
     }
 
     @Override
-    public Collection<Lexeme> parse() {
+    public List<Lexeme> parse() {
         ArrayList<Lexeme> lexemes = new ArrayList<>();
         Collection<String> splitLines = splitter.split(line);
         for (String st: splitLines) {
