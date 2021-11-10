@@ -30,6 +30,12 @@ pitest {
     coverageThreshold.set(95)
 }
 
+jacocoTestReport {
+    reports {
+        csv.required = true
+    }
+}
+
 jacocoTestCoverageVerification {
     violationRules {
         rule {
