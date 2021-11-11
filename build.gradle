@@ -27,7 +27,7 @@ pitest {
     junit5PluginVersion = "0.15"
     threads = 8
     outputFormats = ['HTML2']
-    testStrengthThreshold.set(85)
+    testStrengthThreshold.set(80)
     coverageThreshold.set(95)
 }
 
