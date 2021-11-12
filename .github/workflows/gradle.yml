@@ -33,6 +33,9 @@ jobs:
     - name: Run Mutation tests
       run: ./gradlew pitest
       
+    - name: Run test Script
+      run: chmod +x ./.github/testScript.sh  
+      
     - name: Upload mutation test report
       run: chmod +x ./.github/upload-mutation-report.sh
       env:
