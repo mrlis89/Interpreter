@@ -1,6 +1,5 @@
 # Interpreter
 
-
 ![Coverage](.github/badges/jacoco.svg)
 ![workflow](https://github.com/mrlis89/Interpreter/actions/workflows/gradle.yml/badge.svg)
 ![commits](https://img.shields.io/github/commit-activity/m/mrlis89/Interpreter)
