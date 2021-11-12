@@ -25,12 +25,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    - name: Build with Gradle
-      run: ./gradlew build
-      
-    - name: clean build
-      run: ./gradlew clean
-      
     - name: Run Mutation tests
       run: ./gradlew pitest
       
@@ -38,7 +32,11 @@ jobs:
       run: |
         chmod +x ./.github/upload-mutation-report.sh
         ./.github/upload-mutation-report.sh
-        
+
+
+    - name: Build with Gradle
+      run: ./gradlew build
+      
       env:
         API_KEY: ${{ secrets.STRYKER_DASHBOARD_TOKEN }}
 
