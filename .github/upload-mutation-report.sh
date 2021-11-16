@@ -19,9 +19,9 @@ PROJECT="github.com/${GITHUB_REPOSITORY}"
 VERSION=${GITHUB_REF#refs/heads/}
 
 # Finally, upload the data using the API key that we got
-echo Uploading mutation-testing-report.json to ${BASE_URL}/api/reports/${PROJECT}/${VERSION}
+echo Uploading mutation-testing-report.json to ${BASE_URL}/api/reports/${PROJECT}/master
 curl -X PUT \
-  ${BASE_URL}/api/reports/${PROJECT}/${VERSION} \
+  ${BASE_URL}/api/reports/${PROJECT}/master \
   -H "Content-Type: application/json" \
   -H "Host: dashboard.stryker-mutator.io" \
   -H "X-Api-Key: ${API_KEY}" \
