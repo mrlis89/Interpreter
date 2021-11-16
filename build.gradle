@@ -15,6 +15,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.assertj:assertj-core:3.21.0'
+    pitest 'io.github.wmaarts:pitest-mutation-testing-elements-plugin:0.4.0'
 }
 
 test {
@@ -25,8 +26,8 @@ pitest {
     targetClasses = ["com.arnava.interpreter.*"]
     junit5PluginVersion = "0.15"
     threads = 8
-    outputFormats= ["XML", "HTML"]
-    testStrengthThreshold.set(85)
+    outputFormats= ["HTML2"]
+    testStrengthThreshold.set(80)
     coverageThreshold.set(95)
 }
 

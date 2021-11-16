@@ -7,7 +7,6 @@ trap "rm mutation-testing-report.json" ERR
 # Find the report.js file
 reportJsLocation=$(find . -name "report.js")
 echo Found report.js at ${reportJsLocation}
-sleep 10
 # Read the file
 reportJsContent=$(<${reportJsLocation})
 # Strip off the first 60 characters - yes, this is brittle :-)
