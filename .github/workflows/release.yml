@@ -25,5 +25,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build
 
-    - name: Publish to sonartype
+    - name: Publish to GitHub
       run: ./gradlew publish
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
