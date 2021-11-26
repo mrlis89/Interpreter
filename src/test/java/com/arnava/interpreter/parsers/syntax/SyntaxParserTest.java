@@ -1,14 +1,7 @@
 package com.arnava.interpreter.parsers.syntax;
 
 import com.arnava.interpreter.parsers.lex.LexParser;
-import com.arnava.interpreter.parsers.lex.LexTypes;
-import com.arnava.interpreter.parsers.lex.Lexeme;
 import org.junit.jupiter.api.Test;
-
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
