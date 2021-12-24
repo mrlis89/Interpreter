@@ -24,4 +24,14 @@ class LexemeConverterTest {
                 new Lexeme(LexTypes.NUMBER,"193")
         );
     }
+
+    @Test
+    void fromStringForVar() {
+        assertThat(
+                new LexemeConverter()
+                        .fromString("INT")
+        ).isEqualTo(
+                new Lexeme(LexTypes.INTVAR)
+        );
+    }
 }

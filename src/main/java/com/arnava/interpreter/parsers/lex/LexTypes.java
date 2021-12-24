@@ -7,6 +7,8 @@ import com.arnava.interpreter.operators.PlusInteger;
 import com.arnava.interpreter.parsers.syntax.SyntaxNode;
 import com.arnava.interpreter.scalars.ScalarInteger;
 import com.arnava.interpreter.types.IScalarType;
+import com.arnava.interpreter.vars.IntVar;
+import com.arnava.interpreter.vars.StrVar;
 
 import java.util.List;
 
@@ -14,18 +16,28 @@ public enum LexTypes {
     //Scalar Values
     NUMBER {
         @Override
-        public ScalarInteger createNew(Lexeme value, List<SyntaxNode> args) {
+        public ScalarInteger createNew(Lexeme lex, List<SyntaxNode> args) {
             int number = Integer
-                            .parseInt(
-                                value
+                    .parseInt(
+                            lex
                                     .getValue()
-                            );
+                    );
             return new ScalarInteger(number);
         }
     },
-    STRING,
-    TRUE,
-    FALSE,
+    //Var Types
+    INTVAR {
+        @Override
+        public IntVar createNew(Lexeme name, List<SyntaxNode> args) {
+            return new IntVar(name.getValue(), args.get(0));
+        }
+    },
+    STRVAR {
+        @Override
+        public StrVar createNew(Lexeme name, List<SyntaxNode> args) {
+            return new StrVar(name.getValue(), args.get(0));
+        }
+    },
 
     //operators
     PLUS {
@@ -40,7 +52,7 @@ public enum LexTypes {
             return new MinusInteger(args.get(0).fromNode(), args.get(1).fromNode());
         }
     },
-    DIV{
+    DIV {
         @Override
         public DivInteger createNew(Lexeme value, List<SyntaxNode> args) {
             return new DivInteger(args.get(0).fromNode(), args.get(1).fromNode());
@@ -52,7 +64,7 @@ public enum LexTypes {
             return new MultInteger(args.get(0).fromNode(), args.get(1).fromNode());
         }
     },
-    ASSIGN,
+    VARNAME,
 
     //Separators
     COMMA,
@@ -60,8 +72,7 @@ public enum LexTypes {
     RIGHT_PARENTHESIS,
     EOL,
 
-    ID
-    ;
+    ID;
 
     public IScalarType createNew(Lexeme value, List<SyntaxNode> args) {
         System.out.println("operator not overridden");

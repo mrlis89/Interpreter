@@ -52,4 +52,8 @@ public class Lexeme {
     public int hashCode() {
         return Objects.hash(type, value);
     }
+
+    public boolean isVarType() {
+        return type.equals(LexTypes.INTVAR);
+    }
 }

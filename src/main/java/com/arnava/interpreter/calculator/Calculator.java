@@ -10,7 +10,7 @@ public class Calculator implements ICalculator {
     public Integer calculate(String st) {
         LexParser lp = new LexParser(st);
         return (Integer) syntaxParser
-                .toNodeTree(lp.parse())
+                .parseExpression(lp.parse())
                 .fromNode()
                 .toScalar();
     }

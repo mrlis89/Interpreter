@@ -8,11 +8,19 @@ import static org.assertj.core.api.Assertions.*;
 class SyntaxParserTest {
 
     @Test
+    void parseForVar() {
+        LexParser lp = new LexParser("INT var = 3");
+        SyntaxParser sp = new SyntaxParser();
+        sp.parse(lp.parse());
+        assertThat(sp.printValueOf("var")).isEqualTo("3");
+    }
+
+    @Test
     void parseForExpression(){
         LexParser lp = new LexParser("3 +5-3 + 1");
         assertThat(
                 new SyntaxParser()
-                        .toNodeTree(lp.parse())
+                        .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar())
                 .isEqualTo(4);
@@ -23,7 +31,7 @@ class SyntaxParserTest {
         LexParser lp = new LexParser("7");
         assertThat(
                 new SyntaxParser()
-                        .toNodeTree(lp.parse())
+                        .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar())
                 .isEqualTo(7);
@@ -34,7 +42,7 @@ class SyntaxParserTest {
         LexParser lp = new LexParser("((3 + 1) * 2)*3");
         assertThat(
                 new SyntaxParser()
-                        .toNodeTree(lp.parse())
+                        .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar()
         )

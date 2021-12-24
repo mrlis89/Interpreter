@@ -5,9 +5,12 @@ public class LexemeConverter implements ILexConverter {
     @Override
     public Lexeme fromString(String st) {
         Lexeme ret = null;
-        String regex = "^\\d+$";
-        if (st.matches(regex)) {
+        String numberRegex = "^\\d+$";
+        String varRegex = "[a-z]\\w+";
+        if (st.matches(numberRegex)) {
             ret = new Lexeme(LexTypes.NUMBER, st);
+        } else if (st.matches(varRegex)) {
+            ret = new Lexeme(LexTypes.VARNAME, st);
         } else {
             switch (st) {
                 case "+": {
@@ -32,6 +35,14 @@ public class LexemeConverter implements ILexConverter {
                 }
                 case "/": {
                     ret = new Lexeme(LexTypes.DIV);
+                    break;
+                }
+                case "INT": {
+                    ret = new Lexeme(LexTypes.INTVAR);
+                    break;
+                }
+                case "STR": {
+                    ret = new Lexeme(LexTypes.STRVAR);
                     break;
                 }
             }
