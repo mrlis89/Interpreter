@@ -15,9 +15,9 @@ public class SyntaxParser {
     public void parse(List<Lexeme> lexemes) {
         Lexeme firstWord = lexemes.get(0);
         if (firstWord.isVarType()) {
-            ArrayList<Lexeme> mathExpr = new ArrayList<>();
+            ArrayList<Lexeme> Expr = new ArrayList<>();
             Lexeme varLexeme = lexemes.get(1);
-            mathExpr
+            Expr
                     .addAll(
                             lexemes
                                     .subList(
@@ -31,7 +31,7 @@ public class SyntaxParser {
                                     .getType()
                                     .createNew(
                                             varLexeme,
-                                            List.of(parseExpression(mathExpr))
+                                            List.of(parseExpression(Expr))
                                             )
                     );
         }
@@ -71,14 +71,14 @@ public class SyntaxParser {
                                     new SyntaxNode(rightBranch.get(0))
                             )
             );
-        } else if (leftBranch.size() == 1 && rightBranch.size() != 1) {
+        } else if (leftBranch.size() == 1) {
             return new SyntaxNode(parent,
                     Arrays
                             .asList(new SyntaxNode(leftBranch.get(0)),
                                     this.parseExpression(new ArrayList<>(rightBranch))
                             )
             );
-        } else if (leftBranch.size() != 1 && rightBranch.size() == 1) {
+        } else if (rightBranch.size() == 1) {
             return new SyntaxNode(parent,
                     Arrays
                             .asList(this.parseExpression(new ArrayList<>(leftBranch)),

@@ -6,6 +6,7 @@ import com.arnava.interpreter.operators.MultInteger;
 import com.arnava.interpreter.operators.PlusInteger;
 import com.arnava.interpreter.parsers.syntax.SyntaxNode;
 import com.arnava.interpreter.scalars.ScalarInteger;
+import com.arnava.interpreter.scalars.ScalarString;
 import com.arnava.interpreter.types.IScalarType;
 import com.arnava.interpreter.vars.IntVar;
 import com.arnava.interpreter.vars.StrVar;
@@ -25,14 +26,29 @@ public enum LexTypes {
             return new ScalarInteger(number);
         }
     },
+    STRING {
+        @Override
+        public ScalarString createNew(Lexeme lex, List<SyntaxNode> args) {
+            String text = lex.getValue();
+            return new ScalarString(
+                    text
+                            .substring(
+                                    1,
+                                    text
+                                            .length()-1
+                            )
+            );
+        }
+    },
+
     //Var Types
-    INTVAR {
+    INTVARTYPE {
         @Override
         public IntVar createNew(Lexeme name, List<SyntaxNode> args) {
             return new IntVar(name.getValue(), args.get(0));
         }
     },
-    STRVAR {
+    STRVARTYPE {
         @Override
         public StrVar createNew(Lexeme name, List<SyntaxNode> args) {
             return new StrVar(name.getValue(), args.get(0));
@@ -67,12 +83,8 @@ public enum LexTypes {
     VARNAME,
 
     //Separators
-    COMMA,
     LEFT_PARENTHESIS,
-    RIGHT_PARENTHESIS,
-    EOL,
-
-    ID;
+    RIGHT_PARENTHESIS;
 
     public IScalarType createNew(Lexeme value, List<SyntaxNode> args) {
         System.out.println("operator not overridden");

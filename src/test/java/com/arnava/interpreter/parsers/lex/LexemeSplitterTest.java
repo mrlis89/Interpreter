@@ -12,8 +12,8 @@ class LexemeSplitterTest {
     @Test
     void splitForExpression() {
         LexemeSplitter ls = new LexemeSplitter();
-        Collection<String> testArray = ls.split(" INT newVar12 ( 4*9)- 1/2 ");
+        Collection<String> testArray = ls.split(" INT newVar12 \"Name\" ( 4*9)- 1/2 ");
         assertThat(testArray)
-                .isEqualTo(Arrays.asList("INT","newVar12","(","4","*","9",")","-","1","/","2"));
+                .isEqualTo(Arrays.asList("INT","newVar12","\"Name\"","(","4","*","9",")","-","1","/","2"));
     }
 }

@@ -15,6 +15,7 @@ public class BranchSplitter implements IBranchSplitter {
         ArrayList<Lexeme> buffer = new ArrayList<>();
         List<List<Lexeme>> result = new ArrayList<>(2);
         int[] parenthesesIndexes = new int[2];
+        boolean lowPriorFound = false;
 
         if (lexemes
                 .contains(
@@ -36,26 +37,29 @@ public class BranchSplitter implements IBranchSplitter {
                 }
                 rightBranch.addAll(buffer);
                 buffer.clear();
+                lowPriorFound = true;
                 break;
             }
             buffer.add(lex);
         }
 //looking for high priority operator
-        buffer.clear();
-        for (int i = 0; i < lexemes.size(); i++) {
-            Lexeme lex = lexemes.get(i);
-            if (lex.isHighPriorOper() && (i < parenthesesIndexes[0] || i > parenthesesIndexes[1])) {
-                parent = lex;
-                leftBranch.addAll(buffer);
-                buffer.clear();
-                for (int j = i + 1; j < lexemes.size(); j++) {
-                    buffer.add(lexemes.get(j));
+        if (!lowPriorFound) {
+            buffer.clear();
+            for (int i = 0; i < lexemes.size(); i++) {
+                Lexeme lex = lexemes.get(i);
+                if (lex.isHighPriorOper() && (i < parenthesesIndexes[0] || i > parenthesesIndexes[1])) {
+                    parent = lex;
+                    leftBranch.addAll(buffer);
+                    buffer.clear();
+                    for (int j = i + 1; j < lexemes.size(); j++) {
+                        buffer.add(lexemes.get(j));
+                    }
+                    rightBranch.addAll(buffer);
+                    buffer.clear();
+                    break;
                 }
-                rightBranch.addAll(buffer);
-                buffer.clear();
-                break;
+                buffer.add(lex);
             }
-            buffer.add(lex);
         }
 
         trimParentheses(leftBranch);
@@ -73,7 +77,7 @@ public class BranchSplitter implements IBranchSplitter {
                 break;
             }
         }
-        for (int i = lexemes.size()-1; i >= 0; i--) {
+        for (int i = lexemes.size() - 1; i >= 0; i--) {
             if (lexemes.get(i).isRightBracket()) {
                 result[1] = i;
                 break;
@@ -87,8 +91,8 @@ public class BranchSplitter implements IBranchSplitter {
     }
 
     public void trimParentheses(List<Lexeme> lexemes) {
-        if (lexemes.get(0).isLeftBracket() && lexemes.get(lexemes.size()-1).isRightBracket()) {
-            lexemes.remove(lexemes.size()-1);
+        if (lexemes.get(0).isLeftBracket() && lexemes.get(lexemes.size() - 1).isRightBracket()) {
+            lexemes.remove(lexemes.size() - 1);
             lexemes.remove(0);
         }
     }

@@ -16,5 +16,10 @@ class ModIntegerTest {
             new ModInteger(3)
                 .toScalar()
         ).isEqualTo(3);
+
+        assertThat(
+            new ModInteger(0)
+                .toScalar()
+        ).isEqualTo(0);
     }
 }

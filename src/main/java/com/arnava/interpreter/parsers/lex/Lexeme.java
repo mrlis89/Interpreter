@@ -40,6 +40,10 @@ public class Lexeme {
         return type.equals(LexTypes.RIGHT_PARENTHESIS);
     }
 
+    public boolean isVarType() {
+        return type.equals(LexTypes.INTVARTYPE) || type.equals(LexTypes.STRVARTYPE);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,9 +55,5 @@ public class Lexeme {
     @Override
     public int hashCode() {
         return Objects.hash(type, value);
-    }
-
-    public boolean isVarType() {
-        return type.equals(LexTypes.INTVAR);
     }
 }

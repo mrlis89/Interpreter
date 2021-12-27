@@ -26,12 +26,13 @@ class LexemeConverterTest {
     }
 
     @Test
-    void fromStringForVar() {
+    void fromStringForStringValue() {
+        String line = "\"Name12\"";
         assertThat(
                 new LexemeConverter()
-                        .fromString("INT")
+                        .fromString(line)
         ).isEqualTo(
-                new Lexeme(LexTypes.INTVAR)
+                new Lexeme(LexTypes.STRING,line)
         );
     }
 }

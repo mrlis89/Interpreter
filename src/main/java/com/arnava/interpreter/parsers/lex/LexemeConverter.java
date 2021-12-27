@@ -6,9 +6,12 @@ public class LexemeConverter implements ILexConverter {
     public Lexeme fromString(String st) {
         Lexeme ret = null;
         String numberRegex = "^\\d+$";
+        String stringRegex = "\\\"([^\\\"]*)\\\"";
         String varRegex = "[a-z]\\w+";
         if (st.matches(numberRegex)) {
             ret = new Lexeme(LexTypes.NUMBER, st);
+        } else if (st.matches(stringRegex)) {
+            ret = new Lexeme(LexTypes.STRING, st);
         } else if (st.matches(varRegex)) {
             ret = new Lexeme(LexTypes.VARNAME, st);
         } else {
@@ -38,11 +41,11 @@ public class LexemeConverter implements ILexConverter {
                     break;
                 }
                 case "INT": {
-                    ret = new Lexeme(LexTypes.INTVAR);
+                    ret = new Lexeme(LexTypes.INTVARTYPE);
                     break;
                 }
                 case "STR": {
-                    ret = new Lexeme(LexTypes.STRVAR);
+                    ret = new Lexeme(LexTypes.STRVARTYPE);
                     break;
                 }
             }
