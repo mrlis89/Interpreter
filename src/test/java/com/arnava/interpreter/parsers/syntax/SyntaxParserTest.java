@@ -36,7 +36,7 @@ class SyntaxParserTest {
 
     @Test
     void parseForExpressionWithDifferentOpers(){
-        LexParser lp = new LexParser("(3 * 5) - 3 * 1");
+        LexParser lp = new LexParser("(3 * 5)- 3 * 1");
         assertThat(
                 new SyntaxParser()
                         .parseExpression(lp.parse())
