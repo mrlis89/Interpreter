@@ -12,7 +12,6 @@ public class BranchSplitter implements IBranchSplitter {
     public List<List<Lexeme>> toBranches(List<Lexeme> lexemes) {
         ArrayList<Lexeme> leftBranch = new ArrayList<>();
         ArrayList<Lexeme> rightBranch = new ArrayList<>();
-        ArrayList<Lexeme> buffer = new ArrayList<>();
         List<List<Lexeme>> result = new ArrayList<>(2);
         int[] parenthesesIndexes = new int[2];
         boolean lowPriorFound = false;
@@ -26,39 +25,34 @@ public class BranchSplitter implements IBranchSplitter {
             parenthesesIndexes = findIndexes(lexemes);
         }
 //looking for low priority operator
-        for (int i = 0; i < lexemes.size(); i++) {
+        for (int i = lexemes.size() - 1; i > 0; i--) {
             Lexeme lex = lexemes.get(i);
             if (lex.isLowPriorOper() && (i < parenthesesIndexes[0] || i > parenthesesIndexes[1])) {
                 parent = lex;
-                leftBranch.addAll(buffer);
-                buffer.clear();
                 for (int j = i + 1; j < lexemes.size(); j++) {
-                    buffer.add(lexemes.get(j));
+                    rightBranch.add(lexemes.get(j));
                 }
-                rightBranch.addAll(buffer);
-                buffer.clear();
+                for (int j = 0; j < i; j++) {
+                    leftBranch.add(lexemes.get(j));
+                }
                 lowPriorFound = true;
                 break;
             }
-            buffer.add(lex);
         }
 //looking for high priority operator
         if (!lowPriorFound) {
-            buffer.clear();
             for (int i = 0; i < lexemes.size(); i++) {
                 Lexeme lex = lexemes.get(i);
                 if (lex.isHighPriorOper() && (i < parenthesesIndexes[0] || i > parenthesesIndexes[1])) {
                     parent = lex;
-                    leftBranch.addAll(buffer);
-                    buffer.clear();
                     for (int j = i + 1; j < lexemes.size(); j++) {
-                        buffer.add(lexemes.get(j));
+                        rightBranch.add(lexemes.get(j));
                     }
-                    rightBranch.addAll(buffer);
-                    buffer.clear();
+                    for (int j = 0; j < i; j++) {
+                        leftBranch.add(lexemes.get(j));
+                    }
                     break;
                 }
-                buffer.add(lex);
             }
         }
 

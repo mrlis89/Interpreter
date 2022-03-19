@@ -22,13 +22,13 @@ class BranchSplitterTest {
         branches = branchSplitter.toBranches(lp.parse());
 
         assertThat(branches.get(0)).isEqualTo(Arrays.asList(
-                        new Lexeme(LexTypes.NUMBER, "5")
+                        new Lexeme(LexTypes.NUMBER, "5"),
+                        new Lexeme(LexTypes.MINUS),
+                        new Lexeme(LexTypes.NUMBER, "3")
                 )
         );
 
         assertThat(branches.get(1)).isEqualTo(Arrays.asList(
-                        new Lexeme(LexTypes.NUMBER, "3"),
-                        new Lexeme(LexTypes.PLUS),
                         new Lexeme(LexTypes.NUMBER, "7")
                 )
         );
@@ -56,6 +56,27 @@ class BranchSplitterTest {
     }
 
     @Test
+    void splitForHighPriorOperatorExpr() {
+        List<List<Lexeme>> branches = new ArrayList<>(2);
+        BranchSplitter branchSplitter = new BranchSplitter();
+
+        LexParser lp = new LexParser("5 / (3 *7)");
+        branches = branchSplitter.toBranches(lp.parse());
+
+        assertThat(branches.get(0)).isEqualTo(Arrays.asList(
+                        new Lexeme(LexTypes.NUMBER, "5")
+                )
+        );
+
+        assertThat(branches.get(1)).isEqualTo(Arrays.asList(
+                        new Lexeme(LexTypes.NUMBER, "3"),
+                        new Lexeme(LexTypes.MULT),
+                        new Lexeme(LexTypes.NUMBER, "7")
+                )
+        );
+    }
+
+    @Test
     void getParent() {
         BranchSplitter branchSplitter = new BranchSplitter();
         LexParser lp = new LexParser("5 -3 +7");
@@ -65,7 +86,7 @@ class BranchSplitterTest {
                 .getParent()
         )
                 .isEqualTo(
-                        new Lexeme(LexTypes.MINUS)
+                        new Lexeme(LexTypes.PLUS)
                 );
     }
 
@@ -81,7 +102,7 @@ class BranchSplitterTest {
 
     @Test
     void trimParentheses() {
-        List <Lexeme> lexemes = new ArrayList<>();
+        List<Lexeme> lexemes = new ArrayList<>();
         lexemes.addAll(new LexParser("(3 + 1)").parse());
         new BranchSplitter()
                 .trimParentheses(lexemes);

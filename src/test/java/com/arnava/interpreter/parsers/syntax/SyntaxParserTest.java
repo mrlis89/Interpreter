@@ -25,13 +25,13 @@ class SyntaxParserTest {
 
     @Test
     void parseForExpression(){
-        LexParser lp = new LexParser("3 +5-3 + 1");
+        LexParser lp = new LexParser("13 +5-3 + 1");
         assertThat(
                 new SyntaxParser()
                         .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar())
-                .isEqualTo(4);
+                .isEqualTo(16);
     }
 
     @Test
@@ -58,14 +58,14 @@ class SyntaxParserTest {
 
     @Test
     void parseForExpressionWithParentheses() {
-        LexParser lp = new LexParser("((3 + 1) * 2)*3");
+        LexParser lp = new LexParser("((3 + 1) * 2)*11");
         assertThat(
                 new SyntaxParser()
                         .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar()
         )
-                .isEqualTo(24);
+                .isEqualTo(88);
     }
 
 }
