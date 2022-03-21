@@ -8,14 +8,41 @@ import static org.assertj.core.api.Assertions.*;
 class SyntaxParserTest {
 
     @Test
+    void parseForIntVar() {
+        LexParser lp = new LexParser("INT var = 3");
+        SyntaxParser sp = new SyntaxParser();
+        sp.parse(lp.parse());
+        assertThat(sp.printValueOf("var")).isEqualTo("3");
+    }
+
+    @Test
+    void parseForStrVar() {
+        LexParser lp = new LexParser("STR var = \"hello\"");
+        SyntaxParser sp = new SyntaxParser();
+        sp.parse(lp.parse());
+        assertThat(sp.printValueOf("var")).isEqualTo("hello");
+    }
+
+    @Test
     void parseForExpression(){
-        LexParser lp = new LexParser("3 +5-3 + 1");
+        LexParser lp = new LexParser("13 +5-3 + 1");
         assertThat(
                 new SyntaxParser()
-                        .toNodeTree(lp.parse())
+                        .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar())
-                .isEqualTo(4);
+                .isEqualTo(16);
+    }
+
+    @Test
+    void parseForExpressionWithDifferentOpers(){
+        LexParser lp = new LexParser("(3 * 5)-  3 * 1");
+        assertThat(
+                new SyntaxParser()
+                        .parseExpression(lp.parse())
+                        .fromNode()
+                        .toScalar())
+                .isEqualTo(12);
     }
 
     @Test
@@ -23,7 +50,7 @@ class SyntaxParserTest {
         LexParser lp = new LexParser("7");
         assertThat(
                 new SyntaxParser()
-                        .toNodeTree(lp.parse())
+                        .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar())
                 .isEqualTo(7);
@@ -31,14 +58,14 @@ class SyntaxParserTest {
 
     @Test
     void parseForExpressionWithParentheses() {
-        LexParser lp = new LexParser("((3 + 1) * 2)*3");
+        LexParser lp = new LexParser("((3 + 1) * 2)*11");
         assertThat(
                 new SyntaxParser()
-                        .toNodeTree(lp.parse())
+                        .parseExpression(lp.parse())
                         .fromNode()
                         .toScalar()
         )
-                .isEqualTo(24);
+                .isEqualTo(88);
     }
 
 }

@@ -24,4 +24,15 @@ class LexemeConverterTest {
                 new Lexeme(LexTypes.NUMBER,"193")
         );
     }
+
+    @Test
+    void fromStringForStringValue() {
+        String line = "\"Name12\"";
+        assertThat(
+                new LexemeConverter()
+                        .fromString(line)
+        ).isEqualTo(
+                new Lexeme(LexTypes.STRING,line)
+        );
+    }
 }

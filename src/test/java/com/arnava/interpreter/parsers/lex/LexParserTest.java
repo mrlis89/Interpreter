@@ -12,12 +12,12 @@ class LexParserTest {
     @Test
     void parseForOneNumber() {
         assertThat(
-                getActual("2")
+                getActual("124")
         ).usingRecursiveComparison().isEqualTo(
                 getExpected(
                         new Lexeme(
                                 LexTypes.NUMBER,
-                                "2"
+                                "124"
                         )
                 )
         );
