@@ -18,11 +18,9 @@ public enum LexTypes {
     NUMBER {
         @Override
         public ScalarInteger createNew(Lexeme lex, List<SyntaxNode> args) {
-            int number = Integer
-                    .parseInt(
-                            lex
-                                    .getValue()
-                    );
+            int number = Integer.parseInt(
+                    lex.getValue()
+            );
             return new ScalarInteger(number);
         }
     },
@@ -31,12 +29,10 @@ public enum LexTypes {
         public ScalarString createNew(Lexeme lex, List<SyntaxNode> args) {
             String text = lex.getValue();
             return new ScalarString(
-                    text
-                            .substring(
-                                    1,
-                                    text
-                                            .length()-1
-                            )
+                    text.substring(
+                            1,
+                            text.length() - 1
+                    )
             );
         }
     },
@@ -83,8 +79,8 @@ public enum LexTypes {
     VARNAME,
 
     //Separators
-    LEFT_PARENTHESIS,
-    RIGHT_PARENTHESIS;
+    LEFT_BRACKET,
+    RIGHT_BRACKET;
 
     public IScalarType createNew(Lexeme value, List<SyntaxNode> args) {
         System.out.println("operator not overridden");

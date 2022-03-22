@@ -6,8 +6,8 @@ import java.util.List;
 
 public class LexParser implements ILexParser {
     private final String line;
-    private ILexemeSplitter splitter = new LexemeSplitter();
-    private ILexConverter converter = new LexemeConverter();
+    private final ILexemeSplitter splitter = new LexemeSplitter();
+    private final ILexConverter converter = new LexemeConverter();
 
     public LexParser(String line) {
         this.line = line;
@@ -15,12 +15,11 @@ public class LexParser implements ILexParser {
 
     @Override
     public List<Lexeme> parse() {
-        ArrayList<Lexeme> lexemes = new ArrayList<>();
-        Collection<String> splitLines = splitter.split(line);
-        for (String st: splitLines) {
+        List<Lexeme> lexemes = new ArrayList<>();
+        List<String> splitLines = splitter.split(line);
+        for (String st : splitLines) {
             lexemes.add(converter.fromString(st));
         }
-
         return lexemes;
     }
 }

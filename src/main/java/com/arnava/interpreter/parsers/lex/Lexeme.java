@@ -24,7 +24,7 @@ public class Lexeme {
         return value;
     }
 
-    public boolean isLowPriorOper () {
+    public boolean isLowPriorOperator() {
         return (type.equals(LexTypes.PLUS) || type.equals(LexTypes.MINUS));
     }
 
@@ -33,11 +33,11 @@ public class Lexeme {
     }
 
     public boolean isLeftBracket () {
-        return type.equals(LexTypes.LEFT_PARENTHESIS);
+        return type.equals(LexTypes.LEFT_BRACKET);
     }
 
     public boolean isRightBracket () {
-        return type.equals(LexTypes.RIGHT_PARENTHESIS);
+        return type.equals(LexTypes.RIGHT_BRACKET);
     }
 
     public boolean isVarType() {

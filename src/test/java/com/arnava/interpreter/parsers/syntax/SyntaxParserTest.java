@@ -57,7 +57,7 @@ class SyntaxParserTest {
     }
 
     @Test
-    void parseForExpressionWithParentheses() {
+    void parseForExpressionWithBrackets() {
         LexParser lp = new LexParser("((3 + 1) * 2)*11");
         assertThat(
                 new SyntaxParser()

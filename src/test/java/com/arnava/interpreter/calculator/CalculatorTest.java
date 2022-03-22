@@ -10,6 +10,6 @@ class CalculatorTest {
     @Test
     void calculate() {
         Calculator calc = new Calculator();
-        assertThat(calc.calculate("(11 - 7-3) * 7")).isEqualTo(7);
+        assertThat(calc.calculate("(11 - 7-3) * 21")).isEqualTo(21);
     }
 }

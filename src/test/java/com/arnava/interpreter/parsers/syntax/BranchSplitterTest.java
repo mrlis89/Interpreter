@@ -16,10 +16,10 @@ class BranchSplitterTest {
     @Test
     void splitForExpr() {
         List<List<Lexeme>> branches = new ArrayList<>(2);
-        BranchSplitter branchSplitter = new BranchSplitter();
-
         LexParser lp = new LexParser("5 -3 +7");
-        branches = branchSplitter.toBranches(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+
+        branches = branchSplitter.toNodeBranches();
 
         assertThat(branches.get(0)).isEqualTo(Arrays.asList(
                         new Lexeme(LexTypes.NUMBER, "5"),
@@ -35,12 +35,12 @@ class BranchSplitterTest {
     }
 
     @Test
-    void splitForExprWithParentheses() {
+    void splitForExprWithBrackets() {
         List<List<Lexeme>> branches = new ArrayList<>(2);
-        BranchSplitter branchSplitter = new BranchSplitter();
-
         LexParser lp = new LexParser("5 - (3 *7)");
-        branches = branchSplitter.toBranches(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+
+        branches = branchSplitter.toNodeBranches();
 
         assertThat(branches.get(0)).isEqualTo(Arrays.asList(
                         new Lexeme(LexTypes.NUMBER, "5")
@@ -58,10 +58,10 @@ class BranchSplitterTest {
     @Test
     void splitForHighPriorOperatorExpr() {
         List<List<Lexeme>> branches = new ArrayList<>(2);
-        BranchSplitter branchSplitter = new BranchSplitter();
-
         LexParser lp = new LexParser("5 / (3 *7)");
-        branches = branchSplitter.toBranches(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+
+        branches = branchSplitter.toNodeBranches();
 
         assertThat(branches.get(0)).isEqualTo(Arrays.asList(
                         new Lexeme(LexTypes.NUMBER, "5")
@@ -78,12 +78,12 @@ class BranchSplitterTest {
 
     @Test
     void getParent() {
-        BranchSplitter branchSplitter = new BranchSplitter();
         LexParser lp = new LexParser("5 -3 +7");
-        branchSplitter.toBranches(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+        branchSplitter.toNodeBranches();
 
         assertThat(branchSplitter
-                .getParent()
+                .getNodeParent()
         )
                 .isEqualTo(
                         new Lexeme(LexTypes.PLUS)
@@ -91,21 +91,24 @@ class BranchSplitterTest {
     }
 
     @Test
-    void findParenthesesIndexes() {
-        int[] res = new int[2];
-        BranchSplitter branchSplitter = new BranchSplitter();
+    void findBracketsIndexes() {
+        int leftBracket;
+        int rightBracket;
         LexParser lp = new LexParser("5 - (3 *7) + 1");
+        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
 
-        res = branchSplitter.findIndexes(lp.parse());
-        assertThat(res).containsExactly(2, 6);
+        leftBracket = branchSplitter.findLeftBracketIndex();
+        rightBracket = branchSplitter.findRightBracketIndex();
+        assertThat(leftBracket).isEqualTo(2);
+        assertThat(rightBracket).isEqualTo(6);
     }
 
     @Test
-    void trimParentheses() {
+    void trimBrackets() {
         List<Lexeme> lexemes = new ArrayList<>();
         lexemes.addAll(new LexParser("(3 + 1)").parse());
-        new BranchSplitter()
-                .trimParentheses(lexemes);
+        new BranchSplitter(lexemes)
+                .trimBrackets(lexemes);
         assertThat(lexemes).isEqualTo(Arrays.asList(
                 new Lexeme(LexTypes.NUMBER, "3"),
                 new Lexeme(LexTypes.PLUS),

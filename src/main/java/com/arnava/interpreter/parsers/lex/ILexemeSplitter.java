@@ -1,7 +1,7 @@
 package com.arnava.interpreter.parsers.lex;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ILexemeSplitter {
-    Collection<String> split(String st);
+    List<String> split(String st);
 }
