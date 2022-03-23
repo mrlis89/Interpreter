@@ -2,6 +2,7 @@ package com.arnava.interpreter.parsers.lex;
 
 import com.arnava.interpreter.exceptions.BracketsCountException;
 import com.arnava.interpreter.exceptions.OperatorOrderException;
+import com.arnava.interpreter.exceptions.SyntaxErrorException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class LexParserTest {
 
     @Test
-    void parseForOneNumber() throws BracketsCountException, OperatorOrderException {
+    void parseForOneNumber() throws SyntaxErrorException {
         assertThat(
                 getActual("124")
         ).usingRecursiveComparison().isEqualTo(
@@ -28,7 +29,7 @@ class LexParserTest {
 
 
     @Test
-    void parseForExpressionWithSpaces() throws BracketsCountException, OperatorOrderException {
+    void parseForExpressionWithSpaces() throws SyntaxErrorException {
         assertThat(
                 getActual(" 21 - 3+5")
         ).usingRecursiveComparison().isEqualTo(
@@ -51,7 +52,7 @@ class LexParserTest {
         );
     }
 
-    private Collection<Lexeme> getActual(String value) throws BracketsCountException, OperatorOrderException {
+    private Collection<Lexeme> getActual(String value) throws SyntaxErrorException {
         return new LexParser(value).toLexemeArray();
     }
 
@@ -60,7 +61,7 @@ class LexParserTest {
     }
 
     @Test
-    void containsBrackets() throws BracketsCountException, OperatorOrderException {
+    void containsBrackets() throws SyntaxErrorException {
         LexParser lp = new LexParser("7 * (3 + 1) + 2");
         assertThat(
                 lp

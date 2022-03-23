@@ -3,6 +3,7 @@ package com.arnava.interpreter.parsers.lex;
 import com.arnava.interpreter.exceptions.BracketsCountException;
 import com.arnava.interpreter.exceptions.OperatorOrderException;
 
+import com.arnava.interpreter.exceptions.SyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class LexParser implements ILexParser {
     }
 
     @Override
-    public List<Lexeme> toLexemeArray() throws BracketsCountException, OperatorOrderException {
+    public List<Lexeme> toLexemeArray() throws SyntaxErrorException {
         List<Lexeme> lexemes = new ArrayList<>();
         List<String> splitLines = splitter.split(inputLine);
         for (String string : splitLines) {
@@ -26,7 +27,7 @@ public class LexParser implements ILexParser {
         return lexemes;
     }
 
-    public void checkForCorrectInput(List<Lexeme> lexemes) throws OperatorOrderException, BracketsCountException {
+    public void checkForCorrectInput(List<Lexeme> lexemes) throws SyntaxErrorException {
         checkForCorrectOperatorsInput(lexemes);
         checkForCorrectBracketsCount(lexemes);
     }
