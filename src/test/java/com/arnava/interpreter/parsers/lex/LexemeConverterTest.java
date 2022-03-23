@@ -9,7 +9,7 @@ class LexemeConverterTest {
     void fromStringForOperator() {
         assertThat(
                 new LexemeConverter()
-                        .fromString("-")
+                        .toLexemeFrom("-")
         ).isEqualTo(
                 new Lexeme(LexTypes.MINUS)
         );
@@ -19,7 +19,7 @@ class LexemeConverterTest {
     void fromStringForNumber() {
         assertThat(
                 new LexemeConverter()
-                        .fromString("193")
+                        .toLexemeFrom("193")
         ).isEqualTo(
                 new Lexeme(LexTypes.NUMBER,"193")
         );
@@ -30,7 +30,7 @@ class LexemeConverterTest {
         String line = "\"Name12\"";
         assertThat(
                 new LexemeConverter()
-                        .fromString(line)
+                        .toLexemeFrom(line)
         ).isEqualTo(
                 new Lexeme(LexTypes.STRING,line)
         );

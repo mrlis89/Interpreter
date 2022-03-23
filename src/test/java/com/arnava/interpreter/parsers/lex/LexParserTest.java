@@ -1,16 +1,19 @@
 package com.arnava.interpreter.parsers.lex;
 
+import com.arnava.interpreter.exceptions.BracketsCountException;
+import com.arnava.interpreter.exceptions.OperatorOrderException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class LexParserTest {
 
     @Test
-    void parseForOneNumber() {
+    void parseForOneNumber() throws BracketsCountException, OperatorOrderException {
         assertThat(
                 getActual("124")
         ).usingRecursiveComparison().isEqualTo(
@@ -23,34 +26,16 @@ class LexParserTest {
         );
     }
 
-    @Test
-    void parseForShortExpressionWithSpaces() {
-        assertThat(
-                getActual(" 2 - 3 ")
-        ).usingRecursiveComparison().isEqualTo(
-                getExpected(
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "2"
-                        ),
-                        new Lexeme(LexTypes.MINUS),
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "3"
-                        )
-                )
-        );
-    }
 
     @Test
-    void parseForLongExpressionWithSpaces() {
+    void parseForExpressionWithSpaces() throws BracketsCountException, OperatorOrderException {
         assertThat(
-                getActual(" 2 - 3+5 - 7")
+                getActual(" 21 - 3+5")
         ).usingRecursiveComparison().isEqualTo(
                 getExpected(
                         new Lexeme(
                                 LexTypes.NUMBER,
-                                "2"
+                                "21"
                         ),
                         new Lexeme(LexTypes.MINUS),
                         new Lexeme(
@@ -61,33 +46,44 @@ class LexParserTest {
                         new Lexeme(
                                 LexTypes.NUMBER,
                                 "5"
-                        ),
-                        new Lexeme(
-                                LexTypes.MINUS
-                        ),
-                        new Lexeme(
-                                LexTypes.NUMBER,
-                                "7"
                         )
                 )
         );
     }
 
-    @Test
-    void containsBrackets() {
-        LexParser lp = new LexParser("7 * (3 + 1) + 2");
-        assertThat(
-                lp
-                        .parse()
-                        .contains(new Lexeme(LexTypes.LEFT_BRACKET))
-        ).isTrue();
-    }
-
-    private Collection<Lexeme> getActual(String value) {
-        return new LexParser(value).parse();
+    private Collection<Lexeme> getActual(String value) throws BracketsCountException, OperatorOrderException {
+        return new LexParser(value).toLexemeArray();
     }
 
     private Collection<Lexeme> getExpected(Lexeme... values) {
         return Arrays.asList(values);
+    }
+
+    @Test
+    void containsBrackets() throws BracketsCountException, OperatorOrderException {
+        LexParser lp = new LexParser("7 * (3 + 1) + 2");
+        assertThat(
+                lp
+                        .toLexemeArray()
+                        .contains(new Lexeme(LexTypes.LEFT_BRACKET))
+        ).isTrue();
+    }
+
+    @Test
+    void checkForCorrectOperatorsInput() {
+        assertThatThrownBy(() -> {
+                    LexParser lp = new LexParser("4 /* 7");
+                    lp.toLexemeArray();
+                }
+        ).isInstanceOf(OperatorOrderException.class);
+    }
+
+    @Test
+    void checkForCorrectBracketsCount() {
+        assertThatThrownBy(() -> {
+                    LexParser lp = new LexParser("((4 * 7)");
+                    lp.toLexemeArray();
+                }
+        ).isInstanceOf(BracketsCountException.class);
     }
 }

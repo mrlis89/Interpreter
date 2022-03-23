@@ -1,5 +1,7 @@
 package com.arnava.interpreter.parsers.syntax;
 
+import com.arnava.interpreter.exceptions.BracketsCountException;
+import com.arnava.interpreter.exceptions.OperatorOrderException;
 import com.arnava.interpreter.parsers.lex.LexParser;
 import org.junit.jupiter.api.Test;
 
@@ -8,60 +10,60 @@ import static org.assertj.core.api.Assertions.*;
 class SyntaxParserTest {
 
     @Test
-    void parseForIntVar() {
+    void parseForIntVar() throws BracketsCountException, OperatorOrderException {
         LexParser lp = new LexParser("INT var = 3");
         SyntaxParser sp = new SyntaxParser();
-        sp.parse(lp.parse());
+        sp.parse(lp.toLexemeArray());
         assertThat(sp.printValueOf("var")).isEqualTo("3");
     }
 
     @Test
-    void parseForStrVar() {
+    void parseForStrVar() throws BracketsCountException, OperatorOrderException {
         LexParser lp = new LexParser("STR var = \"hello\"");
         SyntaxParser sp = new SyntaxParser();
-        sp.parse(lp.parse());
+        sp.parse(lp.toLexemeArray());
         assertThat(sp.printValueOf("var")).isEqualTo("hello");
     }
 
     @Test
-    void parseForExpression(){
+    void parseForExpression() throws BracketsCountException, OperatorOrderException {
         LexParser lp = new LexParser("13 +5-3 + 1");
         assertThat(
                 new SyntaxParser()
-                        .parseExpression(lp.parse())
+                        .toNodeFrom(lp.toLexemeArray())
                         .fromNode()
                         .toScalar())
                 .isEqualTo(16);
     }
 
     @Test
-    void parseForExpressionWithDifferentOpers(){
+    void parseForExpressionWithDifferentOpers() throws BracketsCountException, OperatorOrderException {
         LexParser lp = new LexParser("(3 * 5)-  3 * 1");
         assertThat(
                 new SyntaxParser()
-                        .parseExpression(lp.parse())
+                        .toNodeFrom(lp.toLexemeArray())
                         .fromNode()
                         .toScalar())
                 .isEqualTo(12);
     }
 
     @Test
-    void parseForOneNumber(){
+    void parseForOneNumber() throws BracketsCountException, OperatorOrderException {
         LexParser lp = new LexParser("7");
         assertThat(
                 new SyntaxParser()
-                        .parseExpression(lp.parse())
+                        .toNodeFrom(lp.toLexemeArray())
                         .fromNode()
                         .toScalar())
                 .isEqualTo(7);
     }
 
     @Test
-    void parseForExpressionWithBrackets() {
+    void parseForExpressionWithBrackets() throws BracketsCountException, OperatorOrderException {
         LexParser lp = new LexParser("((3 + 1) * 2)*11");
         assertThat(
                 new SyntaxParser()
-                        .parseExpression(lp.parse())
+                        .toNodeFrom(lp.toLexemeArray())
                         .fromNode()
                         .toScalar()
         )

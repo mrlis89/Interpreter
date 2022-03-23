@@ -1,7 +1,6 @@
 package com.arnava.interpreter.parsers.lex;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +10,7 @@ public class LexemeSplitter implements ILexemeSplitter {
 
     @Override
     public List<String> split(String expression) {
-        expression = deleteSpaces(expression);
+        expression = deleteSpacesIn(expression);
         List<String> result = new ArrayList<>();
         Matcher matcher = pattern.matcher(expression);
         while (matcher.find()) {
@@ -22,9 +21,9 @@ public class LexemeSplitter implements ILexemeSplitter {
         return result;
     }
 
-    private String deleteSpaces(String st) {
+    private String deleteSpacesIn(String string) {
         String result = "";
-        for (char sym : st.toCharArray()) {
+        for (char sym : string.toCharArray()) {
             if (sym != ' ') {
                 result += sym;
             }

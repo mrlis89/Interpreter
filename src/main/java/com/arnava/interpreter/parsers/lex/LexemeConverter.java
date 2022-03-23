@@ -3,19 +3,19 @@ package com.arnava.interpreter.parsers.lex;
 public class LexemeConverter implements ILexConverter {
 
     @Override
-    public Lexeme fromString(String st) {
+    public Lexeme toLexemeFrom(String string) {
         Lexeme ret = null;
         String numberRegex = "^\\d+$";
         String stringRegex = "\\\"([^\\\"]*)\\\"";
         String varRegex = "[a-z]\\w+";
-        if (st.matches(numberRegex)) {
-            ret = new Lexeme(LexTypes.NUMBER, st);
-        } else if (st.matches(stringRegex)) {
-            ret = new Lexeme(LexTypes.STRING, st);
-        } else if (st.matches(varRegex)) {
-            ret = new Lexeme(LexTypes.VARNAME, st);
+        if (string.matches(numberRegex)) {
+            ret = new Lexeme(LexTypes.NUMBER, string);
+        } else if (string.matches(stringRegex)) {
+            ret = new Lexeme(LexTypes.STRING, string);
+        } else if (string.matches(varRegex)) {
+            ret = new Lexeme(LexTypes.VARNAME, string);
         } else {
-            switch (st) {
+            switch (string) {
                 case "+": {
                     ret = new Lexeme(LexTypes.PLUS);
                     break;
@@ -38,6 +38,10 @@ public class LexemeConverter implements ILexConverter {
                 }
                 case "/": {
                     ret = new Lexeme(LexTypes.DIV);
+                    break;
+                }
+                case "=": {
+                    ret = new Lexeme(LexTypes.EQUALS);
                     break;
                 }
                 case "INT": {
