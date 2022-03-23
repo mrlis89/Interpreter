@@ -74,12 +74,12 @@ class LexParserTest {
     }
 
     @Test
-    void containsParentheses() {
+    void containsBrackets() {
         LexParser lp = new LexParser("7 * (3 + 1) + 2");
         assertThat(
                 lp
                         .parse()
-                        .contains(new Lexeme(LexTypes.LEFT_PARENTHESIS))
+                        .contains(new Lexeme(LexTypes.LEFT_BRACKET))
         ).isTrue();
     }
 

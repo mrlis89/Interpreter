@@ -25,11 +25,11 @@ public class LexemeConverter implements ILexConverter {
                     break;
                 }
                 case "(": {
-                    ret = new Lexeme(LexTypes.LEFT_PARENTHESIS);
+                    ret = new Lexeme(LexTypes.LEFT_BRACKET);
                     break;
                 }
                 case ")": {
-                    ret = new Lexeme(LexTypes.RIGHT_PARENTHESIS);
+                    ret = new Lexeme(LexTypes.RIGHT_BRACKET);
                     break;
                 }
                 case "*": {
