@@ -24,6 +24,10 @@ public class Lexeme {
         return value;
     }
 
+    public boolean isOperator() {
+        return (isLowPriorOperator() || isHighPriorOper());
+    }
+
     public boolean isLowPriorOperator() {
         return (type.equals(LexTypes.PLUS) || type.equals(LexTypes.MINUS));
     }

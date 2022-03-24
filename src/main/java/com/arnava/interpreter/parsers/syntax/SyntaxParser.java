@@ -11,7 +11,7 @@ public class SyntaxParser {
 
     private final ArrayList<IVars> Vars = new ArrayList<>();
 
-    public SyntaxNode parseExpression(List<Lexeme> lexemes) {
+    public SyntaxNode toNodeFrom(List<Lexeme> lexemes) {
         BranchSplitter branchSplitter = new BranchSplitter(lexemes);
         List<List<Lexeme>> branches = new ArrayList<List<Lexeme>>(2);
         ArrayList<Lexeme> leftBranch;
@@ -38,21 +38,21 @@ public class SyntaxParser {
             return new SyntaxNode(nodeParent,
                     Arrays.asList(
                             new SyntaxNode(leftBranch.get(0)),
-                            parseExpression(new ArrayList<>(rightBranch))
+                            toNodeFrom(new ArrayList<>(rightBranch))
                     )
             );
         } else if (rightBranch.size() == 1) {
             return new SyntaxNode(nodeParent,
                     Arrays
-                            .asList(this.parseExpression(new ArrayList<>(leftBranch)),
+                            .asList(this.toNodeFrom(new ArrayList<>(leftBranch)),
                                     new SyntaxNode(rightBranch.get(0))
                             )
             );
         } else {
             return new SyntaxNode(nodeParent,
                     Arrays
-                            .asList(parseExpression(new ArrayList<>(leftBranch)),
-                                    parseExpression(new ArrayList<>(rightBranch))
+                            .asList(toNodeFrom(new ArrayList<>(leftBranch)),
+                                    toNodeFrom(new ArrayList<>(rightBranch))
                             )
             );
         }
@@ -69,7 +69,7 @@ public class SyntaxParser {
                     ));
             Vars.add((IVars) firstWord.getType().createNew(
                             varLexeme,
-                            List.of(parseExpression(Expr))
+                            List.of(toNodeFrom(Expr))
                     )
             );
         }

@@ -1,5 +1,8 @@
 package com.arnava.interpreter.parsers.syntax;
 
+import com.arnava.interpreter.exceptions.BracketsCountException;
+import com.arnava.interpreter.exceptions.OperatorOrderException;
+import com.arnava.interpreter.exceptions.SyntaxErrorException;
 import com.arnava.interpreter.parsers.lex.LexParser;
 import com.arnava.interpreter.parsers.lex.LexTypes;
 import com.arnava.interpreter.parsers.lex.Lexeme;
@@ -14,10 +17,10 @@ import static org.assertj.core.api.Assertions.*;
 class BranchSplitterTest {
 
     @Test
-    void splitForExpr() {
+    void splitForExpr() throws SyntaxErrorException {
         List<List<Lexeme>> branches = new ArrayList<>(2);
         LexParser lp = new LexParser("5 -3 +7");
-        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
 
         branches = branchSplitter.toNodeBranches();
 
@@ -35,10 +38,10 @@ class BranchSplitterTest {
     }
 
     @Test
-    void splitForExprWithBrackets() {
+    void splitForExprWithBrackets() throws SyntaxErrorException {
         List<List<Lexeme>> branches = new ArrayList<>(2);
         LexParser lp = new LexParser("5 - (3 *7)");
-        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
 
         branches = branchSplitter.toNodeBranches();
 
@@ -56,10 +59,10 @@ class BranchSplitterTest {
     }
 
     @Test
-    void splitForHighPriorOperatorExpr() {
+    void splitForHighPriorOperatorExpr() throws SyntaxErrorException {
         List<List<Lexeme>> branches = new ArrayList<>(2);
         LexParser lp = new LexParser("5 / (3 *7)");
-        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
 
         branches = branchSplitter.toNodeBranches();
 
@@ -77,9 +80,9 @@ class BranchSplitterTest {
     }
 
     @Test
-    void getParent() {
+    void getParent() throws SyntaxErrorException {
         LexParser lp = new LexParser("5 -3 +7");
-        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
         branchSplitter.toNodeBranches();
 
         assertThat(branchSplitter
@@ -91,11 +94,11 @@ class BranchSplitterTest {
     }
 
     @Test
-    void findBracketsIndexes() {
+    void findBracketsIndexes() throws SyntaxErrorException {
         int leftBracket;
         int rightBracket;
         LexParser lp = new LexParser("5 - (3 *7) + 1");
-        BranchSplitter branchSplitter = new BranchSplitter(lp.parse());
+        BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
 
         leftBracket = branchSplitter.findLeftBracketIndex();
         rightBracket = branchSplitter.findRightBracketIndex();
@@ -104,9 +107,9 @@ class BranchSplitterTest {
     }
 
     @Test
-    void trimBrackets() {
+    void trimBrackets() throws SyntaxErrorException {
         List<Lexeme> lexemes = new ArrayList<>();
-        lexemes.addAll(new LexParser("(3 + 1)").parse());
+        lexemes.addAll(new LexParser("(3 + 1)").toLexemeArray());
         new BranchSplitter(lexemes)
                 .trimBrackets(lexemes);
         assertThat(lexemes).isEqualTo(Arrays.asList(

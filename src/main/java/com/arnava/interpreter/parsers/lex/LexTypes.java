@@ -77,6 +77,7 @@ public enum LexTypes {
         }
     },
     VARNAME,
+    EQUALS,
 
     //Separators
     LEFT_BRACKET,
