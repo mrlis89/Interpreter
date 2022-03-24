@@ -5,5 +5,5 @@ import com.arnava.interpreter.parsers.lex.Lexeme;
 import java.util.List;
 
 public interface IBranchSplitter {
-    List<List<Lexeme>> toNodeBranches();
+    List<List<Lexeme>> toLexemeBranches();
 }

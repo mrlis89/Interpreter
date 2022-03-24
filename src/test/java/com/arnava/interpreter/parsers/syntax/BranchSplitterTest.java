@@ -1,7 +1,5 @@
 package com.arnava.interpreter.parsers.syntax;
 
-import com.arnava.interpreter.exceptions.BracketsCountException;
-import com.arnava.interpreter.exceptions.OperatorOrderException;
 import com.arnava.interpreter.exceptions.SyntaxErrorException;
 import com.arnava.interpreter.parsers.lex.LexParser;
 import com.arnava.interpreter.parsers.lex.LexTypes;
@@ -22,7 +20,7 @@ class BranchSplitterTest {
         LexParser lp = new LexParser("5 -3 +7");
         BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
 
-        branches = branchSplitter.toNodeBranches();
+        branches = branchSplitter.toLexemeBranches();
 
         assertThat(branches.get(0)).isEqualTo(Arrays.asList(
                         new Lexeme(LexTypes.NUMBER, "5"),
@@ -43,7 +41,7 @@ class BranchSplitterTest {
         LexParser lp = new LexParser("5 - (3 *7)");
         BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
 
-        branches = branchSplitter.toNodeBranches();
+        branches = branchSplitter.toLexemeBranches();
 
         assertThat(branches.get(0)).isEqualTo(Arrays.asList(
                         new Lexeme(LexTypes.NUMBER, "5")
@@ -64,7 +62,7 @@ class BranchSplitterTest {
         LexParser lp = new LexParser("5 / (3 *7)");
         BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
 
-        branches = branchSplitter.toNodeBranches();
+        branches = branchSplitter.toLexemeBranches();
 
         assertThat(branches.get(0)).isEqualTo(Arrays.asList(
                         new Lexeme(LexTypes.NUMBER, "5")
@@ -83,7 +81,7 @@ class BranchSplitterTest {
     void getParent() throws SyntaxErrorException {
         LexParser lp = new LexParser("5 -3 +7");
         BranchSplitter branchSplitter = new BranchSplitter(lp.toLexemeArray());
-        branchSplitter.toNodeBranches();
+        branchSplitter.toLexemeBranches();
 
         assertThat(branchSplitter
                 .getNodeParent()

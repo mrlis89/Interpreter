@@ -1,7 +1,16 @@
 package com.arnava.interpreter.parsers.lex;
 
+/**
+ * {@code LexemeConverter} converts each string element into {@code Lexeme}
+ */
 public class LexemeConverter implements ILexConverter {
 
+    /**
+     *
+     * @param string is a String element from array we need to convert to {@code Lexeme}
+     * @return Lexeme object
+     * @see Lexeme
+     */
     @Override
     public Lexeme toLexemeFrom(String string) {
         Lexeme ret = null;

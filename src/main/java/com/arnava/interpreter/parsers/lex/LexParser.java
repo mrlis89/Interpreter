@@ -7,6 +7,10 @@ import com.arnava.interpreter.exceptions.SyntaxErrorException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *{@code LexParser} converts array of string elements into array of {@code Lexeme}.
+ * Class has two object inside to split entered line and convert result into Lexeme array
+ */
 public class LexParser implements ILexParser {
     private final String inputLine;
     private final ILexemeSplitter splitter = new LexemeSplitter();
@@ -15,7 +19,10 @@ public class LexParser implements ILexParser {
     public LexParser(String inputLine) {
         this.inputLine = inputLine;
     }
-
+    /**
+     *Converts {@code inputLine} into array of {@code Lexeme}.
+     * @see Lexeme
+     */
     @Override
     public List<Lexeme> toLexemeArray() throws SyntaxErrorException {
         List<Lexeme> lexemes = new ArrayList<>();
@@ -27,11 +34,21 @@ public class LexParser implements ILexParser {
         return lexemes;
     }
 
+    /**
+     * Method checks syntax format of entered line
+     * @param lexemes array of {@code Lexeme}
+     * @throws SyntaxErrorException if we have OperatorOrderException or BracketsCountException
+     */
     public void checkForCorrectInput(List<Lexeme> lexemes) throws SyntaxErrorException {
         checkForCorrectOperatorsInput(lexemes);
         checkForCorrectBracketsCount(lexemes);
     }
 
+    /**
+     * Method checks syntax format of entered operators
+     * @param lexemes array of Lexeme
+     * @throws OperatorOrderException if line contains operator entered next to another operator
+     */
     public void checkForCorrectOperatorsInput(List<Lexeme> lexemes) throws OperatorOrderException {
         for (int i = 0; i < lexemes.size() - 1; i++) {
             if (lexemes.get(i).isOperator() && lexemes.get(i+1).isOperator()) {
@@ -40,6 +57,11 @@ public class LexParser implements ILexParser {
         }
     }
 
+    /**
+     * Method checks syntax format of entered brackets
+     * @param lexemes array of Lexeme
+     * @throws BracketsCountException if line contains incorrect count of brackets
+     */
     public void checkForCorrectBracketsCount(List<Lexeme> lexemes) throws BracketsCountException {
         int leftBracketCount = 0;
         int rightBracketCount = 0;

@@ -11,6 +11,12 @@ public class SyntaxParser {
 
     private final ArrayList<IVars> Vars = new ArrayList<>();
 
+    /**
+     * This method receives array of Lexeme and uses BranchSplitter object to convert the array
+     * into tree of Lexemes. Next, this tree converts into node structure.
+     * @param lexemes the array of Lexemes
+     * @return SyntaxNode
+     */
     public SyntaxNode toNodeFrom(List<Lexeme> lexemes) {
         BranchSplitter branchSplitter = new BranchSplitter(lexemes);
         List<List<Lexeme>> branches = new ArrayList<List<Lexeme>>(2);
@@ -21,7 +27,7 @@ public class SyntaxParser {
         if (lexemes.size() == 1) {
             return new SyntaxNode(lexemes.get(0));
         } else {
-            branches.addAll(branchSplitter.toNodeBranches());
+            branches.addAll(branchSplitter.toLexemeBranches());
             nodeParent = branchSplitter.getNodeParent();
             leftBranch = new ArrayList<>(branches.get(0));
             rightBranch = new ArrayList<>(branches.get(1));
