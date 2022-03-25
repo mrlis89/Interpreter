@@ -13,6 +13,10 @@ import com.arnava.interpreter.vars.StrVar;
 
 import java.util.List;
 
+/**
+ * Class contains types of {@code Lexemes}
+ * @see Lexeme
+ */
 public enum LexTypes {
     //Scalar Values
     NUMBER {
@@ -83,6 +87,12 @@ public enum LexTypes {
     LEFT_BRACKET,
     RIGHT_BRACKET;
 
+    /**
+     * Method creates new object using creation context of Lexeme type. Every Lexeme type overrides this method to create needed object
+     * @param value Lexeme which represents type of Syntax Node
+     * @param args array of child Syntax Nodes
+     * @see SyntaxNode
+     */
     public IScalarType createNew(Lexeme value, List<SyntaxNode> args) {
         System.out.println("operator not overridden");
         return null;

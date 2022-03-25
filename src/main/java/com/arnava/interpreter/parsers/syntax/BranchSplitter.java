@@ -6,6 +6,11 @@ import com.arnava.interpreter.parsers.lex.Lexeme;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class should to convert user entered line into tree of Lexemes and pass this tree to {@code SyntaxParser}
+ * to be converted into a tree of syntax nodes
+ * @see SyntaxNode
+ */
 public class BranchSplitter implements IBranchSplitter {
     private Lexeme NodeParent;
     private final List<Lexeme> lexemes;
@@ -19,7 +24,15 @@ public class BranchSplitter implements IBranchSplitter {
         this.lexemes = lexemes;
     }
 
-    public List<List<Lexeme>> toNodeBranches() {
+    /**
+     *The algorithm divides Lexeme array by found operator. First, we look for an operator
+     *      with a low priority, if we do not find it, then we try to find an operator with a high priority.
+     *      If the expression contains brackets then the operator must be out of them.
+     *      The array will be divided into two branches by the index of the found operator.
+     * @return the array which contains left and right part of given {@code Lexeme} array.
+     *
+     */
+    public List<List<Lexeme>> toLexemeBranches() {
         List<List<Lexeme>> result = new ArrayList<>(2);
 
         if (lexemes.contains(new Lexeme(LexTypes.LEFT_BRACKET))) {
